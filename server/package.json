@@ -9,5 +9,18 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Joshua Bautista <joshbautista.com>",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "config": "^3.3.3",
+    "cors": "^2.8.5",
+    "crypto-js": "^4.0.0",
+    "express": "^4.17.1",
+    "express-jwt": "^6.0.0",
+    "jsonwebtoken": "^8.5.1",
+    "mongoose": "^5.11.10",
+    "nodemon": "^2.0.7",
+    "uuid": "^8.3.2",
+    "winston": "^3.3.3"
+  }
 }
