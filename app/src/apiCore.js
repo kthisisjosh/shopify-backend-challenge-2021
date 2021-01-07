@@ -71,6 +71,7 @@ export const uploadImages = (userId, token, images) => {
         body: JSON.stringify({
             userId,
             images,
+            private: false
         })
     })
         .then(response => {
@@ -79,6 +80,26 @@ export const uploadImages = (userId, token, images) => {
         .catch(err => {
             return {
                 "error": "Could not get images"
+            };
+        })
+};
+
+export const deleteImage = (userId, token, imageId) => {
+
+    return fetch(`${API}/image/${imageId}/${userId}/`, {
+        method: 'DELETE',
+        headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${token}`
+        },
+    })
+        .then(response => {
+            return response.json();
+        })
+        .catch(err => {
+            return {
+                "error": "Could not delete image"
             };
         })
 };

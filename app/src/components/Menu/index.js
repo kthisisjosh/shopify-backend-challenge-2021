@@ -22,7 +22,13 @@ const Menu = ({history}) => (
 
             {isAuthenticated() && (
                 <li className="nav-item">
-                    <Link className="nav-link" style={{color: "#FFFFFF"}} to="/dashboard">Upload</Link>
+                    <Link className="nav-link" style={{color: "#FFFFFF"}} to="/dashboard">Manage Images</Link>
+                </li>
+            )}
+
+            {isAuthenticated() && (
+                <li className="nav-item">
+                    <Link className="nav-link" style={{color: "#FFFFFF"}} to="/upload">Upload</Link>
                 </li>
             )}
 

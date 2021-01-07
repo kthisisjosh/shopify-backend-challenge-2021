@@ -31,9 +31,10 @@ exports.create = (req, res) => {
                    error: err
                })
            }
-
-           res.json(result)
        })
+   })
+   res.state(200).json({
+       message: "Images successfully uploaded!"
    })
 }
 
@@ -72,10 +73,19 @@ exports.list = (req, res) => {
     })
 }
 
-exports.photo = (req, res, next) => {
-    if (req.image.photo.data) {
-        res.set('Content-Type', req.image.photo.contentType)
-        return res.send(req.image.photo.data)
-    }
-    next()
+exports.listByUser = (req, res) => {
+    let user = { user: req.profile._id }
+
+    Image.find(user)
+        .populate()
+        .sort([])
+        .limit()
+        .exec((err, images) => {
+        if (err) {
+            return res.status(400).json({
+                error: 'Images not found'
+            })
+        }
+        res.json(images)
+    })
 }

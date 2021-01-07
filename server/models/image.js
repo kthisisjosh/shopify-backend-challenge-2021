@@ -9,6 +9,11 @@ const imageSchema = new mongoose.Schema(
             ref: "User",
             required: true
         },
+        private: {
+            type: Boolean,
+            default: false,
+            required: true
+        },
         price: {
             type: Number,
             trim: true,

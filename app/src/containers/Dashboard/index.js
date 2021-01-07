@@ -1,77 +1,73 @@
 import React, { useState, useEffect } from 'react'
 import Layout from "../../components/Layout"
-import ImageUploading from "react-images-uploading"
 import Typography from "@material-ui/core/Typography"
 import Grid from "@material-ui/core/Grid"
 import Button from "@material-ui/core/Button"
-import { getImagesByUser, uploadImages } from "../../apiCore"
+import { getImagesByUser, deleteImage } from "../../apiCore"
 import { isAuthenticated } from '../../auth'
+import Swal from "sweetalert2"
+import ClipLoader from "react-spinners/ClipLoader";
 
-const Dashboard = () => {
+const Dashboard = ({ history }) => {
 
-    const [imagesToBeUploaded, setImagesToBeUploaded] = useState([])
+    const [images, setImages] = useState([])
+    const [loading, setLoading] = useState(false)
     const { user, token } = isAuthenticated();
 
-    const onChange = (imageList, addUpdateIndex) => {
-        // data for submit
-        console.log(imageList, addUpdateIndex);
-        setImagesToBeUploaded(imageList);
-    };
-
-    const onUpload = () => {
-        console.log(imagesToBeUploaded)
-        uploadImages(user._id, token, imagesToBeUploaded)
+    const loadImages = () => {
+        setLoading(true)
+        getImagesByUser(user._id, token).then(data => {
+            setImages(data)
+            setLoading(false)
+        })
     }
+
+    const onDelete = (imageId) => {
+        Swal.fire({
+            title: 'Are you sure?',
+            text: "You won't be able to revert this!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, delete it!'
+            }).then((result) => {
+                deleteImage(user._id, token, imageId).then(() => {
+                    if (result.isConfirmed) {
+                        Swal.fire(
+                        'Deleted!',
+                        'Your file has been deleted.',
+                        'success'
+                        ).then(() => {
+                            setTimeout(() => {
+                                history.go(0)
+                            }, 1000)
+                        })
+                    }
+                }).catch(err => console.log(err))
+            
+            }).catch(err => console.log(err))
+    }
+
+    useEffect(() => {
+        loadImages()
+    }, [])
 
     return (
         <Layout
-            title="Dashboard"
+            title="Manage Images"
             className="container-fluid"
         >
-            <Typography variant="h4">Upload Images</Typography>
-            <Grid>
-                <ImageUploading
-                    multiple={true}
-                    value={imagesToBeUploaded}
-                    onChange={onChange}
-                    maxNumber={100}
-                    dataURLKey="data_url"
-                >
-                    {({
-                    imageList,
-                    onImageUpload,
-                    onImageRemoveAll,
-                    onImageRemove,
-                    dragProps
-                    }) => (
-                    // write your building UI
-                    <Grid container direction="column" className="upload__image-wrapper">
-                        <Grid item>
-                            <Button
-                                onClick={onImageUpload}
-                                style={{ margin: 25 }}
-                                variant="contained"
-                                {...dragProps}
-                                >
-                                Click or Drop here
-                            </Button>
-                            <Button variant="contained" onClick={onImageRemoveAll} style={{ margin: 25 }}>Remove all images</Button>
-                            <Button variant="contained" onClick={onUpload} style={{ margin: 25 }}>Upload</Button>
+            <Typography variant="h4">Your Images</Typography>
+            {loading ? <ClipLoader color="red" loading={loading} size={50}/> : <Grid container>
+                {images.map((image, index) => (
+                    <Grid item key={index} className="image-item" style={{ margin: 25 }}>
+                        <img src={image.data_url} alt="" width="250" />
+                        <Grid item className="image-item__btn-wrapper">
+                            <Button style={{ marginTop: 10, left: "30%"}} variant="contained" onClick={() => onDelete(image._id)}>Remove</Button>
                         </Grid>
-                        <Grid container>
-                            {imageList.map((image, index) => (
-                            <Grid item key={index} className="image-item" style={{ margin: 25 }}>
-                                <img src={image.data_url} alt="" width="250" />
-                                <Grid item className="image-item__btn-wrapper">
-                                    <Button style={{ marginTop: 10, left: "30%"}} variant="contained" onClick={() => onImageRemove(index)}>Remove</Button>
-                                </Grid>
-                            </Grid>
-                            ))}
-                        </Grid>
-                    </Grid>
-                 )}
-                </ImageUploading>
-            </Grid>
+                    </Grid>))}
+            </Grid>}
         </Layout>
     )
 }
