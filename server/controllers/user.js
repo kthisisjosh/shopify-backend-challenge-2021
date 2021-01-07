@@ -13,7 +13,6 @@ exports.userById = (req, res, next, id) => {
 }
 
 exports.read = (req, res) => {
-    //const userId = req.params.id;
     let userId = req.profile._id
 
     User.findById(userId).exec((err, user) => {

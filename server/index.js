@@ -64,17 +64,19 @@ app.use( (req, res, done) => {
     done();
 });
 
-app.use(bodyParser.json())
+app.use(bodyParser.json({limit: "50mb"}))
 app.use(cors())
 
 // Import routes
 const authRoute = require("./routes/auth");
 const userRoute = require("./routes/user");
+const imageRoute = require("./routes/image");
 const pingRoute = require("./routes/ping");
 
 // Use routes middleware
 app.use("/api", authRoute);
 app.use("/api", userRoute);
+app.use("/api", imageRoute);
 app.use("/api", pingRoute);
 
 app.listen(port, () => {
