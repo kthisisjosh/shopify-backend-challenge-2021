@@ -33,7 +33,7 @@ exports.create = (req, res) => {
            }
        })
    })
-   res.state(200).json({
+   res.status(200).json({
        message: "Images successfully uploaded!"
    })
 }
