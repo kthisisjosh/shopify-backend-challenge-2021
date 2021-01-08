@@ -33,7 +33,7 @@ const Upload = ({ history }) => {
                     icon: 'success',
                     title: 'Your images have been uploaded!',
                     showConfirmButton: false,
-                    timer: 1000
+                    timer: 1500
                 }).then(() => {
                     history.go(0)
                 })

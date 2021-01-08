@@ -1,4 +1,3 @@
-const fs = require('fs')
 const Image = require('../models/image')
 
 exports.imageById = (req, res, next, id) => {
@@ -49,6 +48,16 @@ exports.remove = (req, res) => {
         }
         res.json({
             'message': 'Image deleted successfully' 
+        })
+    })
+}
+
+exports.removeAllByUser = (req, res) => {
+    let user = { user: req.profile._id }
+
+    Image.deleteMany(user).then(() => {
+        res.json({
+            "message": "Images delete successfully"
         })
     })
 }
