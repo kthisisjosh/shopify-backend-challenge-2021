@@ -25,13 +25,23 @@ const Dashboard = ({ history }) => {
     const onSelect = (isPrivate, imageId) => {
         const label = isPrivate ? "private" : "public"
         updateImage(user._id, token, imageId, isPrivate).then((res) => {
-            Swal.fire({
-                position: 'top-end',
-                icon: 'success',
-                title: `Your image is now ${label}!`,
-                showConfirmButton: false,
-                timer: 1000
-            })
+            if (res.error) {
+                Swal.fire({
+                    position: 'top-end',
+                    icon: 'error',
+                    title: "Something went wrong.",
+                    showConfirmButton: false,
+                    timer: 1000
+                })
+            } else {
+                Swal.fire({
+                    position: 'top-end',
+                    icon: 'success',
+                    title: `Your image is now ${label}!`,
+                    showConfirmButton: false,
+                    timer: 1000
+                })
+            }
         })
     }
 
@@ -45,26 +55,28 @@ const Dashboard = ({ history }) => {
             cancelButtonColor: '#d33',
             confirmButtonText: 'Yes, delete it!'
             }).then((result) => {
-                deleteImage(user._id, token, imageId).then(() => {
+                deleteImage(user._id, token, imageId).then((res) => {
                     if (result.isConfirmed) {
-                        Swal.fire(
-                        'Deleted!',
-                        'Your file has been deleted.',
-                        'success'
-                        ).then(() => {
-                            setTimeout(() => {
-                                history.go(0)
-                            }, 1000)
-                        })
+                        if (res.error) {
+                            Swal.fire({
+                                position: 'top-end',
+                                icon: 'error',
+                                title: "Something went wrong.",
+                                showConfirmButton: false,
+                                timer: 1000
+                            })
+                        } else {
+                            Swal.fire(
+                            'Deleted!',
+                            'Your file has been deleted.',
+                            'success'
+                            ).then(() => {
+                                setTimeout(() => {
+                                    history.go(0)
+                                }, 1000)
+                            })
+                        }
                     }
-                }).catch((err) => {
-                    Swal.fire({
-                        position: 'top-end',
-                        icon: 'error',
-                        title: "Something went wrong.",
-                        showConfirmButton: false,
-                        timer: 1000
-                    })
                 })
             })
     }

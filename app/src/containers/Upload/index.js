@@ -18,17 +18,27 @@ const Upload = ({ history }) => {
     };
 
     const onUpload = () => {
-        uploadImages(user._id, token, imagesToBeUploaded).then(() => {
-            Swal.fire({
-                position: 'top-end',
-                icon: 'success',
-                title: 'Your images have been uploaded!',
-                showConfirmButton: false,
-                timer: 1000
-            }).then(() => {
-                history.go(0)
-            })
-        }).catch(err => console.log(err))
+        uploadImages(user._id, token, imagesToBeUploaded).then((res) => {
+            if (res.error) {
+                Swal.fire({
+                    position: 'top-end',
+                    icon: 'error',
+                    title: "Something went wrong.",
+                    showConfirmButton: false,
+                    timer: 1000
+                })
+            } else {
+                Swal.fire({
+                    position: 'top-end',
+                    icon: 'success',
+                    title: 'Your images have been uploaded!',
+                    showConfirmButton: false,
+                    timer: 1000
+                }).then(() => {
+                    history.go(0)
+                })
+            }
+        })
     }
 
     return (
