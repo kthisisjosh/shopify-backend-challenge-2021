@@ -29,7 +29,7 @@ const ImageCard = ({ image, firstName, lastName, dashboard, onDelete, onSelect, 
             <img src={image.data_url} alt="" width="250" />
         </Grid>
        {!dashboard && <Grid>
-                        <Typography variant='caption'>via {firstName + " " + lastName}</Typography>
+                        <Typography variant='caption'>from {firstName + " " + lastName}</Typography>
                       </Grid>}
         {dashboard && <Grid container spacing={5}>
                             <Grid item style={{ marginLeft: "8%" }}>
