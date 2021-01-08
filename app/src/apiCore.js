@@ -104,3 +104,25 @@ export const deleteImage = (userId, token, imageId) => {
         })
 };
 
+export const updateImage = (userId, token, imageId, isPrivate) => {
+
+    return fetch(`${API}/image/${imageId}/${userId}/`, {
+        method: 'PUT',
+        headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${token}`
+        },
+        body: JSON.stringify({
+            isPrivate
+        })
+    })
+        .then(response => {
+            return response.json();
+        })
+        .catch(err => {
+            return {
+                "error": "Could not delete image"
+            };
+        })
+};

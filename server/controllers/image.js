@@ -53,6 +53,31 @@ exports.remove = (req, res) => {
     })
 }
 
+exports.update = (req, res) => {
+    const { isPrivate } = req.body
+    let image = req.image
+
+    Image.findOne({ _id: image._id }, (err, image) => {
+        if (err) {
+            return res.status(400).json({
+                error: "Image not found."
+            })
+        }
+
+        image.private = isPrivate
+
+        image.save((err, updatedImage) => {
+            if (err) {
+                return res.status(400).json({
+                    error: "Failed to update image."
+                })
+            }
+
+            res.json(updatedImage)
+        })
+    })
+}
+
 exports.list = (req, res) => {
 
     let order = req.query.order ? req.query.order : 'asc'

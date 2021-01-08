@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import Layout from "../../components/Layout"
 import Typography from "@material-ui/core/Typography"
 import Grid from "@material-ui/core/Grid"
-import { getImagesByUser, deleteImage } from "../../apiCore"
+import { getImagesByUser, deleteImage, updateImage } from "../../apiCore"
 import { isAuthenticated } from '../../auth'
 import Swal from "sweetalert2"
 import ClipLoader from "react-spinners/ClipLoader";
@@ -19,6 +19,19 @@ const Dashboard = ({ history }) => {
         getImagesByUser(user._id, token).then(data => {
             setImages(data)
             setLoading(false)
+        })
+    }
+
+    const onSelect = (isPrivate, imageId) => {
+        const label = isPrivate ? "private" : "public"
+        updateImage(user._id, token, imageId, isPrivate).then((res) => {
+            Swal.fire({
+                position: 'top-end',
+                icon: 'success',
+                title: `Your image is now ${label}!`,
+                showConfirmButton: false,
+                timer: 1000
+            })
         })
     }
 
@@ -44,9 +57,16 @@ const Dashboard = ({ history }) => {
                             }, 1000)
                         })
                     }
-                }).catch(err => console.log(err))
-            
-            }).catch(err => console.log(err))
+                }).catch((err) => {
+                    Swal.fire({
+                        position: 'top-end',
+                        icon: 'error',
+                        title: "Something went wrong.",
+                        showConfirmButton: false,
+                        timer: 1000
+                    })
+                })
+            })
     }
 
     useEffect(() => {
@@ -61,7 +81,14 @@ const Dashboard = ({ history }) => {
             <Typography variant="h4">Your Images</Typography>
             {loading ? <ClipLoader color="red" loading={loading} size={50}/> : <Grid container>
                 {images.map((image, index) => (
-                    <ImageCard image={image} key={index} dashboard={true} isPrivate={image.private}/>))}
+                    <ImageCard
+                        image={image}
+                        key={index}
+                        dashboard={true}
+                        isPrivate={image.private}
+                        onDelete={onDelete}
+                        onSelect={onSelect}
+                    />))}
             </Grid>}
         </Layout>
     )
