@@ -1,4 +1,4 @@
-const API = 'http://localhost:8080/api';
+const API = 'http://localhost:8000/api';
 
 export const getUser = (userId, token) => {
     return fetch(`${API}/user/${userId}`, {

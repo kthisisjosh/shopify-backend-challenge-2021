@@ -6,7 +6,7 @@ const cors = require('cors');
 const winston = require('winston');
 
 let app = express();
-const port = process.env.PORT || 8080;
+const port = process.env.PORT || 8000;
 
 mongoose.Promise = global.Promise;
 
