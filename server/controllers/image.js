@@ -60,7 +60,7 @@ exports.list = (req, res) => {
     let limit = req.query.limit ? parseInt(req.query.limit) : 6
 
     Image.find()
-        .populate()
+        .populate("user")
         .sort([[sortBy, order]])
         .limit(limit)
         .exec((err, images) => {
