@@ -8,4 +8,4 @@ router.get('/user/:userId', requireSignin, isAuth, read);
 
 router.param('userId', userById);
 
-module.exports = router
+module.exports = router;

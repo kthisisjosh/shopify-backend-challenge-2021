@@ -1,27 +1,25 @@
-const API = "http://localhost:8080/api"
+const API = 'http://localhost:8080/api';
 
 export const getUser = (userId, token) => {
-
     return fetch(`${API}/user/${userId}`, {
         method: 'GET',
         headers: {
             Accept: 'application/json',
             'Content-Type': 'application/json',
-            Authorization: `Bearer ${token}`
+            Authorization: `Bearer ${token}`,
         },
     })
-        .then(response => {
+        .then((response) => {
             return response.json();
         })
-        .catch(err => {
+        .catch((err) => {
             return {
-                "error": "Could not get restaurants"
+                error: 'Could not get restaurants',
             };
-        })
+        });
 };
 
 export const getImages = () => {
-
     return fetch(`${API}/images`, {
         method: 'GET',
         headers: {
@@ -29,120 +27,115 @@ export const getImages = () => {
             'Content-Type': 'application/json',
         },
     })
-        .then(response => {
+        .then((response) => {
             return response.json();
         })
-        .catch(err => {
+        .catch((err) => {
             return {
-                "error": "Could not get restaurants"
+                error: 'Could not get restaurants',
             };
-        })
+        });
 };
 
 export const getImagesByUser = (userId, token) => {
-
     return fetch(`${API}/images/${userId}`, {
         method: 'GET',
         headers: {
             Accept: 'application/json',
             'Content-Type': 'application/json',
-            Authorization: `Bearer ${token}`
+            Authorization: `Bearer ${token}`,
         },
     })
-        .then(response => {
+        .then((response) => {
             return response.json();
         })
-        .catch(err => {
+        .catch((err) => {
             return {
-                "error": "Could not get restaurants"
+                error: 'Could not get restaurants',
             };
-        })
+        });
 };
 
 export const uploadImages = (userId, token, images) => {
-
     return fetch(`${API}/image/create/${userId}/`, {
         method: 'POST',
         headers: {
             Accept: 'application/json',
             'Content-Type': 'application/json',
-            Authorization: `Bearer ${token}`
+            Authorization: `Bearer ${token}`,
         },
         body: JSON.stringify({
             userId,
             images,
-            private: false
-        })
+            private: false,
+        }),
     })
-        .then(response => {
+        .then((response) => {
             return response.json();
         })
-        .catch(err => {
+        .catch((err) => {
             return {
-                "error": "Could not get images"
+                error: 'Could not get images',
             };
-        })
+        });
 };
 
 export const deleteImage = (userId, token, imageId) => {
-
     return fetch(`${API}/image/${imageId}/${userId}/`, {
         method: 'DELETE',
         headers: {
             Accept: 'application/json',
             'Content-Type': 'application/json',
-            Authorization: `Bearer ${token}`
+            Authorization: `Bearer ${token}`,
         },
     })
-        .then(response => {
+        .then((response) => {
             return response.json();
         })
-        .catch(err => {
+        .catch((err) => {
             return {
-                "error": "Could not delete image"
+                error: 'Could not delete image',
             };
-        })
+        });
 };
 
 export const deleteAllImagesByUser = (userId, token) => {
-
     return fetch(`${API}/image/${userId}/`, {
         method: 'DELETE',
         headers: {
             Accept: 'application/json',
             'Content-Type': 'application/json',
-            Authorization: `Bearer ${token}`
+            Authorization: `Bearer ${token}`,
         },
     })
-        .then(response => {
+        .then((response) => {
             return response.json();
         })
-        .catch(err => {
+        .catch((err) => {
             return {
-                "error": "Could not delete image"
+                error: 'Could not delete image',
             };
-        })
+        });
 };
 
 export const updateImage = (userId, token, imageId, isPrivate) => {
-
     return fetch(`${API}/image/${imageId}/${userId}/`, {
         method: 'PUT',
         headers: {
             Accept: 'application/json',
             'Content-Type': 'application/json',
-            Authorization: `Bearer ${token}`
+            Authorization: `Bearer ${token}`,
         },
         body: JSON.stringify({
-            isPrivate
-        })
+            isPrivate,
+        }),
     })
-        .then(response => {
+        .then((response) => {
             return response.json();
         })
-        .catch(err => {
+        .catch((err) => {
             return {
-                "error": "Could not delete image"
+                error: 'Could not delete image',
             };
-        })
+        });
 };

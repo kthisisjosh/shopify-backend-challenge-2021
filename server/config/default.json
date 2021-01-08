@@ -1,4 +1,4 @@
 {
-  "JWT_SECRET": "this is the JWT secret",
-  "DATABASE": "mongodb+srv://kthisisjosh:Z0nSVbz7Szq1YAgo@cluster0.bojd1.mongodb.net/shopify-challenge?authSource=admin&retryWrites=true&w=majority"
+    "JWT_SECRET": "this is the JWT secret",
+    "DATABASE": "mongodb+srv://kthisisjosh:Z0nSVbz7Szq1YAgo@cluster0.bojd1.mongodb.net/shopify-challenge?authSource=admin&retryWrites=true&w=majority"
 }

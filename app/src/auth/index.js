@@ -1,92 +1,88 @@
-
-const API = "http://localhost:8080/api"
+const API = 'http://localhost:8080/api';
 
 export const signup = (user) => {
-
     return fetch(`${API}/signup`, {
-        method: "POST",
+        method: 'POST',
         headers: {
             Accept: 'application/json',
-            "Content-Type": 'application/json'
+            'Content-Type': 'application/json',
         },
-        body: JSON.stringify(user)
+        body: JSON.stringify(user),
     })
-    .then(response => {
-        return response.json()
-    })
-    .catch(err => {
-        console.log(err)
-    })
-}
+        .then((response) => {
+            return response.json();
+        })
+        .catch((err) => {
+            console.log(err);
+        });
+};
 
 export const signin = (user) => {
-
     return fetch(`${API}/signin`, {
-        method: "POST",
+        method: 'POST',
         headers: {
             Accept: 'application/json',
-            "Content-Type": 'application/json'
+            'Content-Type': 'application/json',
         },
-        body: JSON.stringify(user)
+        body: JSON.stringify(user),
     })
-    .then(response => {
-        return response.json()
-    })
-    .catch(err => {
-        console.log(err)
-    })
-}
+        .then((response) => {
+            return response.json();
+        })
+        .catch((err) => {
+            console.log(err);
+        });
+};
 
 export const authenticate = (data, next) => {
     if (typeof window !== 'undefined') {
-        localStorage.setItem('jwt', JSON.stringify(data))
-        next()
+        localStorage.setItem('jwt', JSON.stringify(data));
+        next();
     }
-}
+};
 
 export const signout = (next) => {
     if (typeof window !== 'undefined') {
-        localStorage.removeItem('jwt')
-        next()
-        
+        localStorage.removeItem('jwt');
+        next();
+
         return fetch(`${API}/signout`, {
-            method: "GET",
+            method: 'GET',
         })
-        .then(response => {
-            console.log("signout", response)
-        })
-        .catch(err => {
-            console.log(err)
-        })
+            .then((response) => {
+                console.log('signout', response);
+            })
+            .catch((err) => {
+                console.log(err);
+            });
     }
-}
+};
 
 export const isAuthenticated = () => {
     if (typeof window == 'undefined') {
-        return false
+        return false;
     }
-    
+
     if (localStorage.getItem('jwt')) {
-        return JSON.parse(localStorage.getItem('jwt'))
+        return JSON.parse(localStorage.getItem('jwt'));
     } else {
-        return false
+        return false;
     }
-}
+};
 
 export const getProfile = (user, token) => {
-
     return fetch(`${API}/user/${user._id}`, {
-        method: "GET",
+        method: 'GET',
         headers: {
             Accept: 'application/json',
-            "Content-Type": 'application/json',
-            Authorization: `Bearer ${token}`
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${token}`,
         },
     })
-    .then(response => {
-        return response.json()
-    })
-    .catch(err => {
-        console.log(err)
-    })
-}
+        .then((response) => {
+            return response.json();
+        })
+        .catch((err) => {
+            console.log(err);
+        });
+};
